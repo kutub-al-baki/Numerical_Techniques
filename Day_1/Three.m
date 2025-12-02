@@ -1,0 +1,12 @@
+clc; clear all;
+R=220;                   
+L=0.5;                   
+C=0.6e-6; 
+f=linspace(100,10000,1000);    
+omega=2*pi*f;     
+Z=sqrt(R^2+(omega*L-1./(omega*C)).^2);
+plot(f,Z,'b','LineWidth',2);
+xlabel('Frequency (Hz)');
+ylabel('Impedance Z (\Omega)');
+title('Impedance of RLC Series Circuit');
+grid on;
