@@ -1,0 +1,88 @@
+clc; clear all;
+close all;
+f = @(x) exp(-x)-x;
+xl = 0; 
+xu = 1;
+tol = 1e-3;
+x = -3:0.001:3;
+plot(x, f(x)); hold on;
+plot(x,0);hold on;
+fp_iters = [];   
+bis_iters = [];  
+x=0;
+plot(x);
+fprintf('\n FALSE POSITION METHOD\n');
+xl_fp = xl; 
+xu_fp = xu;
+i = 0;
+
+if f(xl_fp) * f(xu_fp) > 0
+    disp('No root in given bracket');
+else
+    disp('   xl       f(xl)      xu       f(xu)       xr      f(xr)');
+    
+    while true
+        xr = xu_fp - f(xu_fp) * (xl_fp - xu_fp)/(f(xl_fp) - f(xu_fp));
+        fp_iters = [fp_iters xr];
+        fprintf('%1.4f   %1.4f   %1.4f   %1.4f   %1.4f   %1.4f\n', ...
+                xl_fp, f(xl_fp), xu_fp, f(xu_fp), xr, f(xr));
+        
+        if abs(f(xr)) < tol
+            break;
+        end
+        
+        if f(xl_fp)*f(xr) < 0
+            xu_fp = xr;
+        else
+            xl_fp = xr;
+        end
+        
+        i = i + 1;
+        if i > 100, break; end
+    end
+end
+fprintf('False Position Root = %f   Iterations = %d\n', xr, i);
+figure;
+plot(x, f(x)); hold on;
+plot(fp_iters, f(fp_iters), 'ro-','LineWidth',2);
+title('False Position Iteration Points');
+xlabel('x'); ylabel('f(x)');
+grid on;
+
+fprintf('\n=========== BISECTION METHOD ===========\n');
+xl_b = xl; 
+xu_b = xu;
+i = 0;
+if f(xl_b) * f(xu_b) > 0
+    disp('No root in given bracket');
+else
+    disp('   xl       f(xl)      xu       f(xu)       xr      f(xr)');
+    
+    while abs((xu_b - xl_b)/2) > tol
+        xr = (xl_b + xu_b)/2;
+         bis_iters = [bis_iters xr];
+        fprintf('%1.4f   %1.4f   %1.4f   %1.4f   %1.4f   %1.4f\n', ...
+                xl_b, f(xl_b), xu_b, f(xu_b), xr, f(xr));
+        
+         if abs(f(xr)) < tol
+            break;
+        end
+        
+        if f(xl_b)*f(xr) < 0
+            xu_b = xr;
+        else
+            xl_b = xr;
+        end
+        
+        i = i + 1;
+        if i > 100, break; end
+    end
+end
+fprintf('Bisection Root = %f   Iterations = %d\n', xr, i);
+figure;
+plot(x, f(x)); hold on;
+plot(bis_iters, f(bis_iters), 'bo-','LineWidth',2);
+title('Bisection Iteration Points');
+xlabel('x'); ylabel('f(x)');
+grid on;
+
