@@ -1,0 +1,17 @@
+clc;
+clear all;
+close all;
+
+x_dat=[0 1 2];
+y_dat=[3 4 6];
+
+a=[0 0 1;1 1 1;4 2 1];
+b=[3 4 6]';
+
+m=a'*a;
+n=a'*b;
+c=inv(m)*n;
+
+y=@(x) c(1)*x.^2+c(2)*x+c(3);
+x_arr=-1:0.1:3;
+plot(x_arr,y(x_arr),x_dat,y_dat);
