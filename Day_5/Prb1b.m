@@ -1,0 +1,11 @@
+clc;clear all;close all;
+A_b = [1 1; 2 1; 3 1];
+b_b = [1; 2; 0];
+M_b = A_b'*A_b;
+N_b = A_b'*b_b;
+x_b = inv(M_b)*N_b;
+residual_b = b_b-A_b*x_b;
+error_b = norm(residual_b,2);
+fprintf('Solution 1(b): \n');
+disp(x_b);
+fprintf('2-norm error (b): %f \n\n', error_b);

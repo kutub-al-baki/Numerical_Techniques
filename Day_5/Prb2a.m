@@ -1,0 +1,13 @@
+clc; clear all;close all;
+A_a = [1 1 0; 0 1 1; 1 2 1; 1 0 1];
+b_a = [2; 2; 3; 4];
+M_a = A_a'*A_a;
+N_a = A_a'*b_a;
+x_a = inv(M_a)*N_a;
+r_a = b_a-A_a*x_a;  
+m_a = length(b_a);    
+SE_a = sum(r_a.^2);   
+RMSE_a = sqrt(SE_a/m_a); 
+fprintf('Solution 2(a): \n'); 
+disp(x_a);
+fprintf('RMSE (a): %f \n\n', RMSE_a);
